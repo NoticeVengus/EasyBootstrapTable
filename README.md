@@ -1,4 +1,6 @@
-## Welcome to GitHub Pages
+## EasyBootstrapTable
+
+BoostrapTable is a fantastic way to build a customized table while using Boostrap.
 
 You can use the [editor on GitHub](https://github.com/yeye0922/EasyBootstrapTable/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
