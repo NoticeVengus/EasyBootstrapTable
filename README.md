@@ -1,40 +1,69 @@
 ## EasyBootstrapTable
 
 [BoostrapTable](http://bootstrap-table.wenzhixin.net.cn) is a fantastic way to build a customized table while using Boostrap.
-But it also 
+But in the use of the process I also found some problems such as in my Firefox browser, BootstrapTable can not be saved in the page when I check the options, table parameters tedious and other issues.
+So, I have a simple package for BootstrapTable, and now it can be used normally on my FireFox browser.
+The following requirements were pruduced during the process of development, so I also package them through jQuery and make them easy to be used:
 
-You can use the [editor on GitHub](https://github.com/yeye0922/EasyBootstrapTable/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+1. Table sorting;
+2. A button in the last position of the line which can emit an event;
+3. Maintain the page after the table reinitialization.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
+### How to use
+Import the scripts of jQuery, Bootstrap, BootstrapTable and EasyBootstrapTable
 ```markdown
-Syntax highlighted code block
+such like the following:
+<script src="plugins/jquery/jquery-1.11.3.min.js"></script>
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+<script src="plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="plugins/bootstrap-easy-table/bootstrap-easy-table.min.js"></script>
+```
+The resource files should be imported as well.
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+Define a table
+```markdown
+<table id="easy-table" class="table table-striped"></table>
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Now you can initialize a table like this
+```markdown
+$('#easy-table').bootstrapCustomTable({
+	url: 'node/data_queryBatch.action',
+	columnsData: [{name:'ID', hide:true},{name:'name'},{name:'note'},{name:'date'},{name:'button'}],
+	fieldData: ['id','name','note','date','button'],
+	isMultiSelect: true,
+	isClickToSelect: false,
+	maintainPage: false,
+	enableSearch: false,
+	enableButton: true,
+	buttonText: 'batch',
+	checkbox: false,
+	queryParams : 
+		function(params){
+			params.accessory=$('#accessory-input').val();
+			return params
+		}
+});
+```
 
-### Jekyll Themes
+### Options
+1. url
+Define thr data request interface. 
+```markdown
+The format of response data should be like this "{total:100, rows:[{id:1,data:a},{id:2,data:b}]}"
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/yeye0922/EasyBootstrapTable/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+2. queryParams[optional]
+Request parameters, equal the 'queryParams' in BootstrapTable
 
-### Support or Contact
+3. columnsData
+These stings will be showed as the title of columns.
+If you do not want make a title invisible but you determine to get the data while user click this row, just set the parameter 'hide' to true.
+This will be useful when you use the 'ID' column to locate the selections.
+```markdown
+[{name:'ID', hide:true},{name:'name'},{name:'note'},{name:'date'},{name:'button'}]
+```
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+4. fieldData
+
+
